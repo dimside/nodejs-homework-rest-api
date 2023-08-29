@@ -8,6 +8,7 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
+
   const isValidPassword = user
     ? await bcrypt.compare(password, user.password)
     : null;
@@ -28,7 +29,7 @@ const login = async (req, res, next) => {
     },
   });
 
-console.log(jwt.verify(token, SECRET_KEY));
+// console.log(jwt.verify(token, SECRET_KEY));
     
 };
 
