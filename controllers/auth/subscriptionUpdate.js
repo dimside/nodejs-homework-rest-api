@@ -1,4 +1,4 @@
-const { ctrlWrapper } = require("../../helpers");
+const { ctrlWrapper, HttpError } = require("../../helpers");
 const { User } = require("../../models/user");
 
 const subscriptionUpdate = async (req, res) => {
