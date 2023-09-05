@@ -17,7 +17,12 @@ router.get("/current", authenticate, controller.getCurrent);
 
 router.post("/logout", authenticate, controller.logout);
 
-router.patch("/avatars", authenticate, upload.single("avatar"), controller.avatarUpdate);
+router.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  controller.avatarUpdate
+);
 
 router.patch(
   "/",
@@ -25,5 +30,9 @@ router.patch(
   validateBody(schemas.updateSubscriptionSchema),
   controller.subscriptionUpdate
 );
+
+router.get("/verify/:verificationToken", controller.verifyEmail);
+
+router.post("/verify", validateBody(schemas.verifySchema), controller.resendVerify);
 
 module.exports = router;

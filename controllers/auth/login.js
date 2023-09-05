@@ -16,8 +16,12 @@ const login = async (req, res, next) => {
   if (!user || !isValidPassword)
     throw HttpError(401, "Email or password is wrong");
 
+  if (!user.verify) {
+    throw HttpError(401, "Email not verified");
+  }
+
   const payload = { id: user._id };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" }); 
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
 
   await User.findByIdAndUpdate(user._id, { token });
 
@@ -29,8 +33,7 @@ const login = async (req, res, next) => {
     },
   });
 
-// console.log(jwt.verify(token, SECRET_KEY));
-    
+  // console.log(jwt.verify(token, SECRET_KEY));
 };
 
 module.exports = ctrlWrapper(login);
